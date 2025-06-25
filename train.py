@@ -91,7 +91,8 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
-        default="stabilityai/stable-diffusion-2-1-base",
+        default="/opt/liblibai-models/user-workspace/colabrate/wenda/models/pretrained/stable-diffusion-2-1-base",
+        # "stabilityai/stable-diffusion-2-1-base",
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )
     parser.add_argument(
@@ -145,7 +146,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--num_class_images",
         type=int,
-        default=100,
+        default=10,
         help=(
             "Minimal class images for prior preservation loss. If there are not enough images already present in"
             " class_data_dir, additional images will be sampled with class_prompt."
@@ -1193,7 +1194,12 @@ class SpatialDreambooth:
                                 is_cross=True,
                                 select=batch_idx,
                             )
-                            curr_cond_batch_idx = self.args.train_batch_size + batch_idx
+                            
+                            # Choose the right index based on whether prior preservation is used
+                            if self.args.with_prior_preservation:
+                                curr_cond_batch_idx = self.args.train_batch_size + batch_idx
+                            else:
+                                curr_cond_batch_idx = batch_idx
 
                             for mask_id in range(len(GT_masks)):
                                 curr_placeholder_token_id = self.placeholder_token_ids[
