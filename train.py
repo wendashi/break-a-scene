@@ -91,8 +91,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
-        default="/opt/liblibai-models/user-workspace/colabrate/wenda/models/pretrained/stable-diffusion-2-1-base",
-        # "stabilityai/stable-diffusion-2-1-base",
+        default="stabilityai/stable-diffusion-2-1-base",
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )
     parser.add_argument(
@@ -146,7 +145,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--num_class_images",
         type=int,
-        default=10,
+        default=100,
         help=(
             "Minimal class images for prior preservation loss. If there are not enough images already present in"
             " class_data_dir, additional images will be sampled with class_prompt."
